@@ -24,8 +24,7 @@ public class EventStoreEventConsumer {
     @Incoming("email")
     public CompletionStage<Void> onMessage(final KafkaMessage<String, String> message) {
         LOGGER.log(Level.INFO, "Consuming email kafka topic");
-        this.emailNotifier.notify(message.getKey(), message.getPayload());
-        return message.ack();
+        return this.emailNotifier.notify(message.getKey(), message.getPayload());
     }
 
 }

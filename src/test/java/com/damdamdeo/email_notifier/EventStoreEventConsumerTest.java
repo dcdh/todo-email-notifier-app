@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 
+import java.util.concurrent.CompletionStage;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -32,8 +34,8 @@ public class EventStoreEventConsumerTest {
     @Test
     public void should_send_email() throws Exception {
         // Given
-        emailNotifier.notify("subject", "content");
-        Thread.sleep(1000);// must wait know because mailer is now reactive !
+        final CompletionStage<Void> completionStage = emailNotifier.notify("subject", "content");
+        completionStage.toCompletableFuture().get();
 
         // Then
         given(new RequestSpecBuilder().setBaseUri("http://localhost").setPort(8025).build())
