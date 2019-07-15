@@ -30,9 +30,10 @@ public class EventStoreEventConsumerTest {
     }
 
     @Test
-    public void should_send_email() {
+    public void should_send_email() throws Exception {
         // Given
-        emailNotifier.notify("content", "subject");
+        emailNotifier.notify("subject", "content");
+        Thread.sleep(1000);// must wait know because mailer is now reactive !
 
         // Then
         given(new RequestSpecBuilder().setBaseUri("http://localhost").setPort(8025).build())
