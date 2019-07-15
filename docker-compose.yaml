@@ -17,7 +17,7 @@ services:
       - zookeeper
     environment:
       - ZOOKEEPER_CONNECT=zookeeper:2181
-      - CREATE_TOPICS=event:1:1:compact,aggregaterootprojection:1:1:compact,flyway_schema_history:1:1:compact,test:1:1:compact
+      - CREATE_TOPICS=email:1:1:compact
 
   kafka-rest:
     image: confluentinc/cp-kafka-rest:5.2.2-1
@@ -46,15 +46,6 @@ services:
       - kafka
       - zookeeper
       - kafka-rest
-
-  todo-email-notifier-query:
-    image: postgres:11-alpine
-    ports:
-      - 5434:5432
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=todoemailnotifier
 
   mailhog:
     image: mailhog/mailhog:v1.0.0
